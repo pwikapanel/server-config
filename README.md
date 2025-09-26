@@ -1,7 +1,7 @@
 
 <!-- vim: set foldmethod=marker fmr=###,--- :-->
 
-*Updated 5 September, 2025*
+*Updated 26 September, 2025*
 
 [aw]: https://github.com/svijasvg/server/tree/master/documentation/Apache%20%26%20Wordpress
 
