@@ -1,0 +1,37 @@
+# specify metadata and ordering information
+# for uWSGI service
+
+[Unit]
+Description=uWSGI Emperor service
+
+[Service]
+# set up the pieces we need to run our server.
+ExecStartPre=/bin/bash -c 'mkdir -p /run/uwsgi; chown limited:www-data /run/uwsgi'
+
+# actual start command
+# emperor mode allows it to manage multiple applications
+# using the files it finds in /etc/uwsgi/sites
+ExecStart=/usr/bin/uwsgi --emperor /etc/uwsgi/sites
+
+# service will be restarted regardless of whether
+# it exited cleanly or not
+Restart=always
+
+# SIGQUIT quit from keyboard
+KillSignal=SIGQUIT
+
+# the daemon sends a notification message when
+# it has finished starting up
+Type=notify
+
+# services updates from all members of the
+# service's control group are accepted
+NotifyAccess=all
+
+# specify when the service should be automatically started.
+# we will tie our service to the multi-user system state
+# whenever the system is set up for multiple users
+# our service will be activated
+
+[Install]
+WantedBy=multi-user.target
