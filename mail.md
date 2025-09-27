@@ -88,13 +88,15 @@ cat /etc/dkimkeys/*.txt
 ```
 v=DKIM1; h=sha256; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQD05TN1MPYCoMecpK...
 ```
-2. **SPF**: create a `TXT` record with an empty hostname:
+2. **SPF**: create a `TXT` record with an empty hostname  
+   — to include many IP addresses, just separate them with returns  
+   — do not use quotes (at Linode — other DNS services may vary)
 ```
-"v=spf1"
-"mx include:_spf.google.com" # if necessary
-"ip4:000.000.000.000 ip6:0000:0000:0000:0000:0000:0000"
-"ip4:000.000.000.000 ip6:0000:0000:0000:0000:0000:0000" # if more than one
-"-all"
+v=spf1
+mx include:_spf.google.com                            # if necessary
+ip4:000.000.000.000 ip6:0000:0000:0000:0000:0000:0000
+ip4:000.000.000.000 ip6:0000:0000:0000:0000:0000:0000 # if more than one
+-all
 ```
 [Google MX Toolbox](https://toolbox.googleapps.com/apps/checkmx/)
 
