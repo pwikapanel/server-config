@@ -183,8 +183,36 @@ journalctl -f -t postfix/smtpd -t postfix/smtp -t postfix/qmgr -t postfix/pickup
 vi /etc/mailname
 ```
 ```
-systemctl reload postfix
+# update 37 myhostname = svija.dev
+vi /etc/postfix/main.cf
 ```
+```
+# update 22 Domain   pwika.com
+#        23 Selector dev        
+vi /etc/opendkim.conf
+```
+Copy the following into a text editor and update ALLCAPS text before running.
+
+Our convention is that `SELECTOR` is the name of the server:
+```
+opendkim-genkey -b 1024 -D /etc/dkimkeys -s SELECTOR -d DOMAIN -v
+chown opendkim:opendkim /etc/dkimkeys -R
+chmod 700 /etc/dkimkeys
+chmod 600 /etc/dkimkeys/*.private
+```
+-----
+##### DNS Records
+```
+cat /etc/dkimkeys/*.txt
+```
+1. **DKIM**: with the the output, create a TXT record with hostname `SELECTOR._domainkey`
+2. **SPF**: add the `IPv4` and `IPv6` addresses or see above for how to create the record
+3. restart postfix and opendkim:
+```
+systemctl restart opendkim
+systemctl restart postfix
+```
+
 
 ---
 
