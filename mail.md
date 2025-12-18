@@ -178,6 +178,13 @@ journalctl -f -t postfix/smtpd -t postfix/smtp -t postfix/qmgr -t postfix/pickup
 
 ### Changing Server Email Address
 
+```
+# change server name
+vi /etc/mailname
+```
+```
+systemctl reload postfix
+```
 
 ---
 
