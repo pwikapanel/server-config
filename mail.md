@@ -189,6 +189,7 @@ vi /etc/postfix/main.cf
 ```
 # update 22 Domain   pwika.com
 #        23 Selector dev        
+#        24 KeyFile  /etc/dkimkeys/dev.private
 vi /etc/opendkim.conf
 ```
 Copy the following into a text editor and update ALLCAPS text before running.
@@ -212,8 +213,6 @@ cat /etc/dkimkeys/*.txt
 systemctl restart opendkim
 systemctl restart postfix
 ```
-
-
 ---
 
 </details>
