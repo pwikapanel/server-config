@@ -3,13 +3,13 @@
 
 *Updated 26 September, 2025*
 
-[aw]: https://github.com/svijasvg/server/tree/master/documentation/Apache%20%26%20Wordpress
+[aw]: https://github.com/pwikasvg/server/tree/master/documentation/Apache%20%26%20Wordpress
 
-![Svija: SVG-based websites built in Adobe Illustrator][logo]
+![Pwika: SVG-based websites built in Adobe Illustrator][logo]
 
-[logo]: http://files.svija.com/github/readme-logo.png "Svija: SVG-based websites built in Adobe Illustrator"
+[logo]: http://files.pwika.com/github/github_banner.png "Pwika: SVG-based websites built in Adobe Illustrator"
 
-### Svija Server Setup
+### Pwika Server Setup
 
 ---
 
@@ -20,7 +20,7 @@
 - start with blank Debian 13 image at [akamai](https://cloud.linode.com)  
   go to `•••` › `rebuild` to reinitialize an existing server
 - use `Shared CPU` / `Nanode 1GB`
-- get a password from [files.svija.com/passwords](https://files.svija.com/passwords)
+- get a password from [files.pwika.com/passwords](https://files.pwika.com/passwords)
 - don't include SSH keys
 - uncheck "Disk Encryption"
 - requires 1 minute to start up
@@ -220,7 +220,7 @@ cd /opt && mkdir logs
 
 #———————————————————— clone repo
 
-git clone git@github.com:/svijasvg/server.git
+git clone git@github.com:/pwikasvg/server.git
 cd server
 
 #———————————————————— automatically remove www from URLs
@@ -254,7 +254,7 @@ cd /opt && mkdir logs
 
 #———————————————————— clone repo
 
-git clone -b beta git@github.com:/svijasvg/server.git
+git clone -b beta git@github.com:/pwikasvg/server.git
 cd server
 
 #———————————————————— automatically remove www from URLs
@@ -280,28 +280,28 @@ rm /etc/nginx/sites-enabled/default
 ```
 ----------
 
-</details><details><summary>Install Svija</summary>
+</details><details><summary>Install Pwika</summary>
 
-### Install Svija (Pick One)
+### Install Pwika (Pick One)
 
 Paste **one of the three** following sections into the `script.sh`:
 ```
-#———————————————————— install Svija Cloud (NOT maintaining)
+#———————————————————— install Pwika Cloud (NOT maintaining)
 
-pip install git+https://github.com/svijasvg/cloud.git@master#egg=django-svija
-
-```
-```
-#———————————————————— install Svija Cloud Beta (NOT maintaining)
-
-pip install git+https://github.com/svijasvg/cloud.git@beta#egg=django-svija
+pip install git+https://github.com/pwikasvg/cloud.git@master#egg=django-pwika
 
 ```
 ```
-#———————————————————— install Svija Cloud Beta (maintaining)
+#———————————————————— install Pwika Cloud Beta (NOT maintaining)
+
+pip install git+https://github.com/pwikasvg/cloud.git@beta#egg=django-pwika
+
+```
+```
+#———————————————————— install Pwika Cloud Beta (maintaining)
 
 cd /opt
-git clone -b beta git@github.com:/svijasvg/cloud.git
+git clone -b beta git@github.com:/pwikasvg/cloud.git
 cd cloud
 pip install -e /opt/cloud
 
