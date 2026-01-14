@@ -88,13 +88,15 @@ cat /etc/dkimkeys/*.txt
 ```
 v=DKIM1; h=sha256; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQD05TN1MPYCoMecpK...
 ```
-2. **SPF**: create a `TXT` record with an empty hostname:
+2. **SPF**: create a `TXT` record with an empty hostname  
+   — to include many IP addresses, just separate them with returns  
+   — do not use quotes (at Linode — other DNS services may vary)
 ```
-"v=spf1"
-"mx include:_spf.google.com" # if necessary
-"ip4:000.000.000.000 ip6:0000:0000:0000:0000:0000:0000"
-"ip4:000.000.000.000 ip6:0000:0000:0000:0000:0000:0000" # if more than one
-"-all"
+v=spf1
+mx include:_spf.google.com                            # if necessary
+ip4:000.000.000.000 ip6:0000:0000:0000:0000:0000:0000
+ip4:000.000.000.000 ip6:0000:0000:0000:0000:0000:0000 # if more than one
+-all
 ```
 [Google MX Toolbox](https://toolbox.googleapps.com/apps/checkmx/)
 
@@ -172,3 +174,45 @@ journalctl -f -t postfix/smtpd -t postfix/smtp -t postfix/qmgr -t postfix/pickup
 
 ----
 
+</details><details><summary>Changing Server Email Address</summary>
+
+### Changing Server Email Address
+
+```
+# change server name
+vi /etc/mailname
+```
+```
+# update 37 myhostname = svija.dev
+vi /etc/postfix/main.cf
+```
+```
+# update 22 Domain   pwika.com
+#        23 Selector dev        
+#        24 KeyFile  /etc/dkimkeys/dev.private
+vi /etc/opendkim.conf
+```
+Copy the following into a text editor and update ALLCAPS text before running.
+
+Our convention is that `SELECTOR` is the name of the server:
+```
+opendkim-genkey -b 1024 -D /etc/dkimkeys -s SELECTOR -d DOMAIN -v
+chown opendkim:opendkim /etc/dkimkeys -R
+chmod 700 /etc/dkimkeys
+chmod 600 /etc/dkimkeys/*.private
+```
+-----
+##### DNS Records
+```
+cat /etc/dkimkeys/*.txt
+```
+1. **DKIM**: with the the output, create a TXT record with hostname `SELECTOR._domainkey`
+2. **SPF**: add the `IPv4` and `IPv6` addresses or see above for how to create the record
+3. restart postfix and opendkim:
+```
+systemctl restart opendkim
+systemctl restart postfix
+```
+---
+
+</details>
